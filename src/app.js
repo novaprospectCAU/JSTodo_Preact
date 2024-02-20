@@ -1,6 +1,7 @@
 import { useState } from "https://esm.sh/preact/hooks";
 import { html } from "./utils.js";
 import { TodoInput } from "./todo-input.js";
+import { TodoList } from "./todo-list.js";
 
 let lastUsedId = 0;
 
@@ -28,5 +29,12 @@ export function App() {
         }}
       />
     </div>
+    <${TodoList}
+      items=${items}
+      currentFilter=${currentFilter}
+      onDelete=${(id) => {
+        setItems(items.filter((item) => item.id !== id));
+      }}
+    />
   </div>`;
 }
