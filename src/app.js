@@ -58,6 +58,9 @@ export function App() {
           return newCurrentFilter;
         });
       }}
+      onDeleteCheck=${() => {
+        setItems(items.filter((item) => !item.isCompleted));
+      }}
     />
   </div>`;
 }
