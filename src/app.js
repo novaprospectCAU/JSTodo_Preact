@@ -37,15 +37,14 @@ export function App() {
       }}
       onCheck=${(id) => {
         setItems(
-          items.map((item) => {
-            if (item.id === id) {
-              return {
-                ...item,
-                isCompleted: !item.isCompleted,
-              };
-            }
-            return item;
-          })
+          items.map((item) =>
+            item.id === id
+              ? {
+                  ...item,
+                  isCompleted: !item.isCompleted,
+                }
+              : item
+          )
         );
       }}
     />
