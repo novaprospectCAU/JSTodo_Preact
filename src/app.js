@@ -35,6 +35,19 @@ export function App() {
       onDelete=${(id) => {
         setItems(items.filter((item) => item.id !== id));
       }}
+      onCheck=${(id) => {
+        setItems(
+          items.map((item) => {
+            if (item.id === id) {
+              return {
+                ...item,
+                isCompleted: !item.isCompleted,
+              };
+            }
+            return item;
+          })
+        );
+      }}
     />
   </div>`;
 }

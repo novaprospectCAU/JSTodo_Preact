@@ -12,6 +12,9 @@ export function TodoList(props) {
             onDelete=${() => {
               props.onDelete(item.id);
             }}
+            onCheck=${() => {
+              props.onCheck(item.id);
+            }}
           />
         `
     )}
@@ -22,18 +25,24 @@ function TodoListItem(props) {
   props.item;
   props.currentFilter;
   let listItemClass = "todo-list__item";
+  let listItemText = "todo-list__item-text";
   if (
     (props.currentFilter === "active" && props.item.isCompleted) ||
     (props.currentFilter === "completed" && !props.item.isCompleted)
   ) {
     listItemClass += " todo-list__item--hiding";
   }
+  if (props.item.isCompleted) {
+    listItemText += " todo-list__item-checked";
+  }
 
   if (props)
     return html` <li class=${listItemClass}>
       <div class="todo-list__item-left">
-        <button></button>
-        <div>${props.item.text}</div>
+        <button class="todo-list__item-check-button" onClick=${props.onCheck}>
+          ${props.item.isCompleted ? "✔️" : ""}
+        </button>
+        <div class=${listItemText}>${props.item.text}</div>
         <input type="text" />
       </div>
       <button onClick=${props.onDelete}>X</button>
