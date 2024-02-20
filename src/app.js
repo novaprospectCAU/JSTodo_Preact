@@ -51,6 +51,7 @@ export function App() {
     />
     <${Toolbar}
       items=${items}
+      currentFilter=${currentFilter}
       onChangeCurrentFilter=${(filter) => {
         setCurrentFilter(() => {
           const newCurrentFilter = filter;

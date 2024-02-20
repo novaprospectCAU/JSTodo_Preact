@@ -2,23 +2,37 @@ import { html } from "./utils.js";
 
 export function Toolbar(props) {
   let toolbarClass = "todo-list__menu";
+  let filterAllClass = "control-all";
+  let filterActiveClass = "control-active";
+  let filterCompletedClass = "control-completed";
   if (props.items.length === 0) {
-    toolbarClass += " todo0list__menu--hiding";
+    toolbarClass += " todo-list__menu--hiding";
   }
+  if (props.currentFilter === "all") {
+    filterActiveClass += " control-button--inactive";
+    filterCompletedClass += " control-button--inactive";
+  } else if (props.currentFilter === "active") {
+    filterAllClass += " control-button--inactive";
+    filterCompletedClass += " control-button--inactive";
+  } else {
+    filterAllClass += " control-button--inactive";
+    filterActiveClass += " control-button--inactive";
+  }
+
   return html` <div class=${toolbarClass}>
     <div class="menu__count">
       ${props.items.filter((item) => !item.isCompleted).length} items left
     </div>
     <div class="menu__control">
-      <button class="control-all" onClick=${() => {
-        props.onChangeCurrentFilter("all");
-      }}>All</button>
-      <button class="control-active" onClick=${() => {
-        props.onChangeCurrentFilter("active");
-      }}>Active</button>
-      <button class="control-completed" onClick=${() => {
-        props.onChangeCurrentFilter("completed");
-      }}>Completed</button>
+      <button class=${filterAllClass} onClick=${() => {
+    props.onChangeCurrentFilter("all");
+  }}>All</button>
+      <button class=${filterActiveClass} onClick=${() => {
+    props.onChangeCurrentFilter("active");
+  }}>Active</button>
+      <button class=${filterCompletedClass} onClick=${() => {
+    props.onChangeCurrentFilter("completed");
+  }}>Completed</button>
     </div>
     <div class="menu-clear">Clear completed</button>
   </div>`;
