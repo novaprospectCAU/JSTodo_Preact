@@ -3,6 +3,7 @@ import { html } from "./utils.js";
 import { TodoInput } from "./todo-input.js";
 import { TodoList } from "./todo-list.js";
 import { Toolbar } from "./toolbar.js";
+import { CheckAllButton } from "./check-all.js";
 
 let lastUsedId = 0;
 
@@ -18,6 +19,34 @@ export function App() {
 
   return html` <div class="main">
     <div class="todo">
+      <${CheckAllButton}
+        items=${items}
+        onToggleAll=${(isCheckedAll) => {
+          if (isCheckedAll) {
+            setItems(
+              items.map((item) =>
+                item.isCompleted === true
+                  ? {
+                      ...item,
+                      isCompleted: !item.isCompleted,
+                    }
+                  : item
+              )
+            );
+          } else {
+            setItems(
+              items.map((item) =>
+                item.isCompleted === false
+                  ? {
+                      ...item,
+                      isCompleted: !item.isCompleted,
+                    }
+                  : item
+              )
+            );
+          }
+        }}
+      />
       <${TodoInput}
         onAddItem=${(string) => {
           const newItem = {
