@@ -2,6 +2,7 @@ import { useState } from "https://esm.sh/preact/hooks";
 import { html } from "./utils.js";
 import { TodoInput } from "./todo-input.js";
 import { TodoList } from "./todo-list.js";
+import { Toolbar } from "./toolbar.js";
 
 let lastUsedId = 0;
 
@@ -46,6 +47,15 @@ export function App() {
               : item
           )
         );
+      }}
+    />
+    <${Toolbar}
+      items=${items}
+      onChangeCurrentFilter=${(filter) => {
+        setCurrentFilter(() => {
+          const newCurrentFilter = filter;
+          return newCurrentFilter;
+        });
       }}
     />
   </div>`;
