@@ -45,6 +45,8 @@ function TodoListItem(props) {
         <div class=${listItemText}>${props.item.text}</div>
         <input type="text" />
       </div>
-      <button onClick=${props.onDelete}>X</button>
+      <button class="todo-list__delete-button" onClick=${props.onDelete}>
+        X
+      </button>
     </li>`;
 }
