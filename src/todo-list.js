@@ -9,16 +9,14 @@ export function TodoList(props) {
             key=${item.id}
             item=${item}
             currentFilter=${props.currentFilter}
-            inputValue=""
             onDelete=${() => {
               props.onDelete(item.id);
             }}
             onCheck=${() => {
               props.onCheck(item.id);
             }}
-            onSwitchInputToText=${() => {
-              console.log("inputValue: ", inputValue);
-              props.onSwitchInputToText(item.id, inputValue);
+            onSwitchInputToText=${(string) => {
+              props.onSwitchInputToText(item.id, string);
             }}
             onSwitchTextToInput=${() => {
               props.onSwitchTextToInput(item.id);
@@ -62,9 +60,9 @@ function TodoListItem(props) {
         <input
           class=${listItemInputClass}
           type="text"
+          value=${props.item.text}
           onBlur=${(e) => {
-            props.inputValue = e.target.value;
-            return props.onSwitchInputToText;
+            props.onSwitchInputToText(e.target.value);
           }}
         />
       </div>
