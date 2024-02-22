@@ -77,6 +77,31 @@ export function App() {
           )
         );
       }}
+      onSwitchInputToText=${(id, string) => {
+        setItems(
+          items.map((item) =>
+            item.id === id
+              ? {
+                  ...item,
+                  text: string,
+                  isEditing: false,
+                }
+              : item
+          )
+        );
+      }}
+      onSwitchTextToInput=${(id) => {
+        setItems(
+          items.map((item) =>
+            item.id === id
+              ? {
+                  ...item,
+                  isEditing: true,
+                }
+              : item
+          )
+        );
+      }}
     />
     <${Toolbar}
       items=${items}
