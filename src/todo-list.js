@@ -1,3 +1,4 @@
+import { useState } from "https://esm.sh/preact/hooks";
 import { html } from "./utils.js";
 
 export function TodoList(props) {
@@ -28,12 +29,12 @@ export function TodoList(props) {
 }
 
 function TodoListItem(props) {
-  props.item;
-  props.currentFilter;
-  props.inputValue;
+  const [isEditing, setIsEditing] = useState(false);
+
   let listItemClass = "todo-list__item";
   let listItemText = "todo-list__item-text";
   let listItemInputClass = "todo-list__item-input";
+
   if (
     (props.currentFilter === "active" && props.item.isCompleted) ||
     (props.currentFilter === "completed" && !props.item.isCompleted)
@@ -43,7 +44,7 @@ function TodoListItem(props) {
   if (props.item.isCompleted) {
     listItemText += " todo-list__item-checked";
   }
-  if (props.item.isEditing) {
+  if (isEditing) {
     listItemText += " todo-list--switch";
   } else {
     listItemInputClass += " todo-list--switch";
@@ -54,7 +55,12 @@ function TodoListItem(props) {
         <button class="todo-list__item-check-button" onClick=${props.onCheck}>
           ${props.item.isCompleted ? "✔️" : ""}
         </button>
-        <div class=${listItemText} onDblClick=${props.onSwitchTextToInput}>
+        <div
+          class=${listItemText}
+          onDblClick=${() => {
+            setIsEditing(true);
+          }}
+        >
           ${props.item.text}
         </div>
         <input
@@ -62,9 +68,10 @@ function TodoListItem(props) {
           type="text"
           value=${props.item.text}
           onBlur=${(e) => {
-            e.target.value.trim() !== ""
-              ? props.onSwitchInputToText(e.target.value)
-              : props.onSwitchInputToText(props.item.text);
+            setIsEditing(false);
+            props.onSwitchInputToText(
+              e.target.value.trim() !== "" ? e.target.value : props.item.text
+            );
           }}
         />
       </div>

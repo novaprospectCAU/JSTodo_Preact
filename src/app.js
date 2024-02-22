@@ -15,17 +15,15 @@ export function App() {
   const [items, setItems] = useState([]);
   const [currentFilter, setCurrentFilter] = useState("all");
 
-  console.log(items);
-
   return html` <div class="main">
     <div class="todo">
       <${CheckAllButton}
         items=${items}
-        onToggleAll=${(isCheckedAll) => {
-          if (isCheckedAll) {
+        onToggleAll=${() => {
+          if (items.some((item) => !item.isCompleted)) {
             setItems(
               items.map((item) =>
-                item.isCompleted === true
+                item.isCompleted === false
                   ? {
                       ...item,
                       isCompleted: !item.isCompleted,
@@ -36,7 +34,7 @@ export function App() {
           } else {
             setItems(
               items.map((item) =>
-                item.isCompleted === false
+                item.isCompleted === true
                   ? {
                       ...item,
                       isCompleted: !item.isCompleted,
@@ -53,7 +51,6 @@ export function App() {
             id: getNextId(),
             text: string,
             isCompleted: false,
-            isEditing: false,
           };
           setItems([newItem, ...items]);
         }}
@@ -84,19 +81,6 @@ export function App() {
               ? {
                   ...item,
                   text: string,
-                  isEditing: false,
-                }
-              : item
-          )
-        );
-      }}
-      onSwitchTextToInput=${(id) => {
-        setItems(
-          items.map((item) =>
-            item.id === id
-              ? {
-                  ...item,
-                  isEditing: true,
                 }
               : item
           )
@@ -107,10 +91,7 @@ export function App() {
       items=${items}
       currentFilter=${currentFilter}
       onChangeCurrentFilter=${(filter) => {
-        setCurrentFilter(() => {
-          const newCurrentFilter = filter;
-          return newCurrentFilter;
-        });
+        setCurrentFilter(filter);
       }}
       onDeleteCheck=${() => {
         setItems(items.filter((item) => !item.isCompleted));

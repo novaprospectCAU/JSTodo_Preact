@@ -15,7 +15,7 @@ export function CheckAllButton(props) {
   return html`<button
     type="button"
     class=${checkAllButtonClass}
-    onClick=${() => props.onToggleAll(isCheckedAll)}
+    onClick=${() => props.onToggleAll()}
   >
     ❯
   </button>`;
