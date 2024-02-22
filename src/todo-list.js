@@ -62,7 +62,9 @@ function TodoListItem(props) {
           type="text"
           value=${props.item.text}
           onBlur=${(e) => {
-            props.onSwitchInputToText(e.target.value);
+            e.target.value.trim() !== ""
+              ? props.onSwitchInputToText(e.target.value)
+              : props.onSwitchInputToText(props.item.text);
           }}
         />
       </div>
